@@ -5,6 +5,17 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
+var http = require('http');
+var request = require('request');
+var lib = require('../utils/glib');
+
+//var SERVERURL = 'http://192.168.1.151:5100';
+
+var config = lib.getConfig();
+//todo: user should maybe store all server urls in a database
+var SERVERURL = config.serverUrl;
+console.log(config);
+
 // Register
 router.get('/register', function(req, res){
 	res.render('register');
@@ -14,6 +25,8 @@ router.get('/register', function(req, res){
 router.get('/login', function(req, res){
 	res.render('login');
 });
+
+
 
 // Register User
 router.post('/register', function(req, res){
@@ -46,7 +59,7 @@ router.post('/register', function(req, res){
 		});
 
 		User.createUser(newUser, function(err, user){
-			if(err) throw err;
+			if(err) {throw err;}
 			console.log(user);
 		});
 
@@ -59,13 +72,13 @@ router.post('/register', function(req, res){
 passport.use(new LocalStrategy(
   function(username, password, done) {
    User.getUserByUsername(username, function(err, user){
-   	if(err) throw err;
+   	if(err) {throw err;}
    	if(!user){
    		return done(null, false, {message: 'Unknown User'});
    	}
 
    	User.comparePassword(password, user.password, function(err, isMatch){
-   		if(err) throw err;
+   		if(err) {throw err;}
    		if(isMatch){
    			return done(null, user);
    		} else {
@@ -98,5 +111,7 @@ router.get('/logout', function(req, res){
 
 	res.redirect('/users/login');
 });
+
+
 
 module.exports = router;

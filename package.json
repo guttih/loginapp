@@ -1,5 +1,5 @@
 {
-  "name": "loginapp",
+  "name": "ardos",
   "version": "1.0.0",
   "description": "Simple authentication system",
   "main": "app.js",
@@ -23,5 +23,13 @@
     "passport": "*",
     "passport-http": "*",
     "passport-local": "*"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-concurrent": "^2.3.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-nodemon": "^0.4.2",
+    "nodemon": "^1.9.2"
   }
 }
